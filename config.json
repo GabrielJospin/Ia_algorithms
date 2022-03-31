@@ -1,0 +1,5 @@
+{
+  "path": "./DataFrames/restaurants.csv",
+  "numOut": 1,
+  "classifier": "DecisionTree"
+}
