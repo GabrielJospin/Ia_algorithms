@@ -1,14 +1,10 @@
 import math
-import struct
-
 import numpy as np
 from abc import ABC
 import classifier as cls
 
 
 class DecisionTree(cls.Classifier, ABC):
-
-    
 
     def __init__(self):
         super().__init__()
@@ -43,7 +39,6 @@ class DecisionTree(cls.Classifier, ABC):
         return ent
 
     def calc_gain(self, list_in, list_out):
-
 
         ent_geral = self.calc_amb_entropy(list_out)
 

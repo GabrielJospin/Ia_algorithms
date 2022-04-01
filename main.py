@@ -11,6 +11,7 @@ logger.setLevel(logging.INFO)
 jFile = json.load(open("./config.json"))
 
 PATH = jFile["path"]
+SEP = jFile["separator"]
 numOut = jFile["numOut"]
 cls = jFile["classifier"]
 
@@ -27,7 +28,7 @@ def getCls(cls):
 def main(cls=cls):
     cls = getCls(cls)
 
-    conn = connection.Connection(PATH)
+    conn = connection.Connection(PATH, SEP)
     df = conn.df
 
     X = df.iloc[:, 0:df.shape[1] - numOut]
