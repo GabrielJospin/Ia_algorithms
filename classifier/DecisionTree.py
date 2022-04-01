@@ -4,24 +4,39 @@ import struct
 import numpy as np
 from abc import ABC
 import classifier as cls
+import utils.sheet
 
 
 class DecisionTree(cls.Classifier, ABC):
 
-    
+
 
     def __init__(self):
         super().__init__()
 
     def train(self, x_train, y_train):
-        hent_tot = self.calc_amb_entropy(y_train)
-        print(hent_tot)
+        ent_tot = self.calc_amb_entropy(y_train)
+        print(ent_tot)
         ent = self.matrix_entropy(x_train, y_train)
+        prob = y_train[y_train.Vai_esperar == 0].shape[0]/y_train.shape[0]
         print(ent)
         ent_max = max(ent)
         pos_max = ent.index(ent_max)
         options = set(np.asarray(x_train.iloc[:, pos_max:pos_max + 1]).flatten())
         print(options)
+        print(prob)
+        tree = utils.sheet(pos_max, ent, prob)
+        aux = tree
+        x_list = x_train
+        y_list = y_train
+        while ent_max < ent_tot or tree.height() < len(ent):
+            for i in options:
+                aux.creat_add_son(ent_tot - ent_max,
+                                  sum(y_list[x_train[pos_max] == i]) / len(y_list[x_train[pos_max] == i]),
+                                  i)
+
+
+
         pass
 
     def test(self, x_test):

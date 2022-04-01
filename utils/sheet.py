@@ -19,3 +19,9 @@ class sheet:
 
     def remove_son(self, condition):
         return self.sons.pop(condition)
+
+    def height(self):
+        height = [0]
+        for son in self.sons:
+            height.append(son.height() + 1)
+        return max(height)
