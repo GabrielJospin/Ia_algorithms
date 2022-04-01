@@ -1,6 +1,4 @@
 import math
-import struct
-
 import numpy as np
 from abc import ABC
 import classifier as cls
@@ -8,8 +6,6 @@ import utils.sheet
 
 
 class DecisionTree(cls.Classifier, ABC):
-
-
 
     def __init__(self):
         super().__init__()
