@@ -8,18 +8,13 @@ import classifier as cls
 from utils.sheet import sheet
 from datetime import datetime
 
-now = str(datetime.now().isoformat())
-
-if not os.path.exists("./log/DecisionTree/"):
-    os.makedirs("./log/DecisionTree/")
-
-logging.basicConfig(filename=f'./log/DecisionTree/{now}.log', encoding='UTF-8')
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 class DecisionTree(cls.Classifier, ABC):
 
     def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.DEBUG)
+
         super().__init__()
         self.tree = None
 
@@ -35,7 +30,7 @@ class DecisionTree(cls.Classifier, ABC):
         pos_max = ent.index(ent_max)
         options = set(np.asarray(x_train.iloc[:, pos_max:pos_max + 1]).flatten())
         tree.entropy = ent_tot
-        tree.probability = sum(y_train)/len(y_train)
+        tree.probability = sum(y_train) / len(y_train)
         tree.column = pos_max
 
         if tree.probability >= 1 or tree.probability <= 0:
@@ -53,10 +48,10 @@ class DecisionTree(cls.Classifier, ABC):
         for x in x_test.iterrows():
             y_pred.append(1 if self.run(x) > 0.5 else 0)
 
-        logger.warning("------- RESULTS------")
+        self.logger.warning("------- RESULTS------")
 
-        logger.info(f"y_test: {y_test}")
-        logger.info(f"y_pred: {y_pred}")
+        self.logger.info(f"y_test: {y_test}")
+        self.logger.info(f"y_pred: {y_pred}")
 
         matrix = [[0, 0],
                   [0, 0]]
@@ -64,11 +59,11 @@ class DecisionTree(cls.Classifier, ABC):
         for pos, ele in enumerate(y_test):
             matrix[int(ele)][int(y_pred[pos])] += 1
 
-        logger.info("confusion matrix:")
-        logger.info(f"\n{pd.DataFrame(matrix)}")
+        self.logger.info("confusion matrix:")
+        self.logger.info(f"\n{pd.DataFrame(matrix)}")
         error = [math.fabs(y_pred[i] - y_test[i]) for i in range(len(y_pred))]
-        logger.info("final result:")
-        logger.info(f"{1 - sum(error)/len(error)} % of error")
+        self.logger.info("final result:")
+        self.logger.info(f"{1 - sum(error) / len(error) * 100} % of error")
 
         return y_pred
 
@@ -88,7 +83,6 @@ class DecisionTree(cls.Classifier, ABC):
         return ent
 
     def calc_gain(self, list_in, list_out):
-
 
         ent_geral = self.calc_amb_entropy(list_out)
 
@@ -125,4 +119,3 @@ class DecisionTree(cls.Classifier, ABC):
             tree = tree.sons[x[tree.column]]
 
         return tree.probability
-

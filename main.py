@@ -1,12 +1,12 @@
+import os
+from datetime import datetime
+
 import classifier
 import connection
 import logging
 import json
 from sklearn.model_selection import train_test_split
 
-logging.basicConfig()
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 jFile = json.load(open("./config.json"))
 
@@ -15,6 +15,14 @@ SEP = jFile["separator"]
 numOut = jFile["numOut"]
 cls = jFile["classifier"]
 
+now = str(datetime.now().isoformat())
+
+if not os.path.exists(f"./log/{cls}/"):
+    os.makedirs(f"./log/{cls}/")
+
+logging.basicConfig(filename=f'./log/{cls}/{now}.log', encoding='UTF-8')
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 def getCls(cls):
     if cls.__eq__("DecisionTree"):
