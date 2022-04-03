@@ -1,42 +1,76 @@
 import math
+import os.path
+import logging
 import numpy as np
 from abc import ABC
+import pandas as pd
 import classifier as cls
-import utils.sheet
+from utils.sheet import sheet
+from datetime import datetime
 
+now = str(datetime.now().isoformat())
+
+if not os.path.exists("./log/DecisionTree/"):
+    os.makedirs("./log/DecisionTree/")
+
+logging.basicConfig(filename=f'./log/DecisionTree/{now}.log', encoding='UTF-8')
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 class DecisionTree(cls.Classifier, ABC):
 
     def __init__(self):
         super().__init__()
+        self.tree = None
 
     def train(self, x_train, y_train):
+        self.tree = self.create_tree(x_train, y_train, sheet(None, None, None))
+        pass
+
+    def create_tree(self, x_train, y_train, tree: sheet):
+        y_train = np.asarray(y_train)
         ent_tot = self.calc_amb_entropy(y_train)
-        print(ent_tot)
         ent = self.matrix_entropy(x_train, y_train)
-        prob = y_train[y_train.Vai_esperar == 0].shape[0]/y_train.shape[0]
-        print(ent)
         ent_max = max(ent)
         pos_max = ent.index(ent_max)
         options = set(np.asarray(x_train.iloc[:, pos_max:pos_max + 1]).flatten())
-        print(options)
-        print(prob)
-        tree = utils.sheet(pos_max, ent, prob)
-        aux = tree
-        x_list = x_train
-        y_list = y_train
-        while ent_max < ent_tot or tree.height() < len(ent):
-            for i in options:
-                aux.creat_add_son(ent_tot - ent_max,
-                                  sum(y_list[x_train[pos_max] == i]) / len(y_list[x_train[pos_max] == i]),
-                                  i)
+        tree.entropy = ent_tot
+        tree.probability = sum(y_train)/len(y_train)
+        tree.column = pos_max
 
+        if tree.probability >= 1 or tree.probability <= 0:
+            return tree
 
+        for op in options:
+            fil = x_train.iloc[:, pos_max] == op
+            if x_train.loc[fil].shape[0] > 1:
+                tree.sons[op] = self.create_tree(x_train.loc[fil], y_train[fil], sheet(None, None, None))
+        return tree
 
-        pass
+    def test(self, x_test, y_test):
+        y_test = np.asarray(y_test.iloc[:]).reshape(1, -1)[0]
+        y_pred = []
+        for x in x_test.iterrows():
+            y_pred.append(1 if self.run(x) > 0.5 else 0)
 
-    def test(self, x_test):
-        pass
+        logger.warning("------- RESULTS------")
+
+        logger.info(f"y_test: {y_test}")
+        logger.info(f"y_pred: {y_pred}")
+
+        matrix = [[0, 0],
+                  [0, 0]]
+
+        for pos, ele in enumerate(y_test):
+            matrix[int(ele)][int(y_pred[pos])] += 1
+
+        logger.info("confusion matrix:")
+        logger.info(f"\n{pd.DataFrame(matrix)}")
+        error = [math.fabs(y_pred[i] - y_test[i]) for i in range(len(y_pred))]
+        logger.info("final result:")
+        logger.info(f"{1 - sum(error)/len(error)} % of error")
+
+        return y_pred
 
     @staticmethod
     def calc_binary_ent(prob):
@@ -81,3 +115,14 @@ class DecisionTree(cls.Classifier, ABC):
             hent.append(self.calc_gain(collumn, out))
 
         return hent
+
+    def run(self, x):
+        tree = self.tree
+        x = np.asarray(x[1])
+        while len(tree.sons) > 0:
+            if x[tree.column] not in tree.sons.keys():
+                return 0.5
+            tree = tree.sons[x[tree.column]]
+
+        return tree.probability
+

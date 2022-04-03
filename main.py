@@ -37,11 +37,12 @@ def main(cls=cls):
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=1)
 
     clasf = cls()
+    logger.info(f"training with the dataset: {jFile['path']}")
     clasf.train(X_train, y_train)
-    y_pred = clasf.test(X_test)
+    logger.info('trained')
+    clasf.test(X_test, y_test)
 
-    print(y_pred)
-    print(y_test)
+    print("result in log files")
 
 if __name__ == '__main__':
     main()

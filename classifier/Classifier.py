@@ -11,5 +11,5 @@ class Classifier(ABC):
         pass
 
     @abstractmethod
-    def test(self, x_test):
+    def test(self, x_test, y_test):
         pass

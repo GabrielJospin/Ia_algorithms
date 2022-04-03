@@ -1,6 +1,6 @@
 {
   "path": "./DataFrames/restaurants.csv",
-  "separator": ";",
+  "separator": ",",
   "numOut": 1,
   "classifier": "DecisionTree"
 }
