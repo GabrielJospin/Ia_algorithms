@@ -1,6 +1,6 @@
 {
-  "path": "./DataFrames/restaurants.csv",
+  "path": "./DataFrames/datasets-uci-iris.csv",
   "separator": ",",
   "numOut": 1,
-  "classifier": "DecisionTree"
+  "classifier": "LinearRegression"
 }

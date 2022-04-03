@@ -20,6 +20,9 @@ def getCls(cls):
     if cls.__eq__("DecisionTree"):
         logger.info("using Decision Tree classifier")
         return classifier.DecisionTree
+    if cls.__eq__("LinearRegression"):
+        logger.info("using Decision Linear Regression")
+        return classifier.LinearRegression
     else:
         logger.error("non-existent classifier")
         return classifier.Classifier
