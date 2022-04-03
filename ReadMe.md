@@ -11,7 +11,9 @@ To run, you will need firstly config the ```config.json```. The attributes of th
 
 after this run this on terminal:
 
-```python main.py```
+```
+python main.py
+```
 
 ## The Result
 
