@@ -19,7 +19,7 @@ python main.py
 
 You can read the result of the run in ```./log/${classifier}/${datetime}``` 
 
-## Classifiers Disposable
+## Classifiers Avaible
 
 - Decision Tree as ```DecisionTree```
 - Linear Regression as ```LinearRegression```

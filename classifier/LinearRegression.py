@@ -66,6 +66,6 @@ class LinearRegression(Classifier, ABC):
         self.logger.info(f"\n{pd.DataFrame(matrix)}")
         error = [math.fabs(y_pred[i] - y_test[i]) for i in range(len(y_pred))]
         self.logger.info("final result:")
-        self.logger.info(f"{(1 - sum(error) / len(error)) * 100} % of error")
+        self.logger.info(f"{(sum(error) / len(error)) * 100} % of error")
 
         return y_pred
