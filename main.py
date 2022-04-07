@@ -31,6 +31,9 @@ def getCls(cls):
     if cls.__eq__("LinearRegression"):
         logger.info("using Decision Linear Regression")
         return classifier.LinearRegression
+    if cls.__eq__("LogisticRegression"):
+        logger.info("using Decision Logistic Regression")
+        return classifier.LogisticRegression
     else:
         logger.error("non-existent classifier")
         return classifier.Classifier

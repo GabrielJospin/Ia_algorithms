@@ -2,5 +2,5 @@
   "path": "./DataFrames/datasets-uci-iris.csv",
   "separator": ",",
   "numOut": 1,
-  "classifier": "LinearRegression"
+  "classifier": "LogisticRegression"
 }
