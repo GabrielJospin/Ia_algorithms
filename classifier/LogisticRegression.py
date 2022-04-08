@@ -26,6 +26,8 @@ class LogisticRegression(Classifier, ABC):
         y_train = np.array(y_train)
         it = 1
         length = x_train.shape[0] - 1
+        bias = np.ones(length)
+        x_train.append(length)
         self.w = np.random.rand(x_train.shape[1])
         error = np.asarray([1])
         while it < 100 or math.fabs(error.mean()) > 0.01:
