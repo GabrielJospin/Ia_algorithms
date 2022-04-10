@@ -26,8 +26,8 @@ class LogisticRegression(Classifier, ABC):
         y_train = np.array(y_train)
         it = 1
         length = x_train.shape[0] - 1
-        bias = np.ones(length)
-        x_train.append(length)
+        bias = np.ones((length + 1, 1))
+        x_train = np.hstack((x_train, bias))
         self.w = np.random.rand(x_train.shape[1])
         error = np.asarray([1])
         while it < 100 or math.fabs(error.mean()) > 0.01:
@@ -45,6 +45,9 @@ class LogisticRegression(Classifier, ABC):
     def test(self, x_test, y_test):
         x_test = np.matrix(x_test)
         y_test = np.asarray(y_test)
+        length = x_test.shape[0] - 1
+        bias = np.ones((length + 1, 1))
+        x_test = np.hstack((x_test, bias))
         y_pred = [1 if self.calc_out(x) > 0.5 else 0 for x in x_test]
         y_pred = np.asarray(y_pred)
 
