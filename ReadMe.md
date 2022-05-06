@@ -27,7 +27,7 @@ You can read the result of the run in ```./log/${classifier}/${datetime}```
 ## Theory
 My [Annotationns][Notion] of the [Prof. Dr. Valdinei Regis da Silva][Valdinei] classes is available to read.
 <br/>
-P.S.: Maybe in future I can write some mediums, but that's not priorized to now
+P.S.: Maybe in the future I can write some mediums, but that's not priorized to now
 ## To Future
 
 - New Classifiers
