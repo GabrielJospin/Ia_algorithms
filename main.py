@@ -20,7 +20,7 @@ now = str(datetime.now().isoformat())
 if not os.path.exists(f"./log/{cls}/"):
     os.makedirs(f"./log/{cls}/")
 
-logging.basicConfig(filename=f'./log/{cls}/{now}.log', encoding='UTF-8')
+logging.basicConfig(filename=f'./log/{cls}/{now}.log')
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 

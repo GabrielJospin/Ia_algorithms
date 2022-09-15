@@ -1,5 +1,5 @@
 {
-  "path": "./DataFrames/datasets-uci-iris.csv",
+  "path": "./DataFrames/ProPublica.csv",
   "separator": ",",
   "numOut": 1,
   "classifier": "LogisticRegression"

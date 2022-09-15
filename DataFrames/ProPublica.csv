@@ -1,4 +1,4 @@
-,age_25 - 45,age_Greater than 45,age_Less than 25,sex_Female,sex_Male,race_African-American,race_Asian,race_Caucasian,race_Hispanic,race_Native American,race_Other,degree_F,degree_M,priors_count,juv_fel_count,juv_misd_count,age,two_year_recid
+id,age_25 - 45,age_Greater than 45,age_Less than 25,sex_Female,sex_Male,race_African-American,race_Asian,race_Caucasian,race_Hispanic,race_Native American,race_Other,degree_F,degree_M,priors_count,juv_fel_count,juv_misd_count,age,two_year_recid
 0,0,1,0,0,1,0,0,0,0,0,1,1,0,0,0,0,69,0
 1,1,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,34,1
 2,0,0,1,0,1,1,0,0,0,0,0,1,0,4,0,0,24,1

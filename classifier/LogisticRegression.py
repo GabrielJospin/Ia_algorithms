@@ -29,6 +29,17 @@ class LogisticRegression(Classifier, ABC):
         bias = np.ones((length + 1, 1))
         x_train = np.hstack((x_train, bias))
         self.w = np.random.rand(x_train.shape[1])
+        i = 0
+
+        for x in x_train.T:
+            mean = x.mean()
+            std = x.std()
+            print(x)
+            print(mean, std)
+            x = (x - mean / std)
+            x_train[:, i] = x
+            i += 1
+
         error = np.asarray([1])
         while it < 100 or math.fabs(error.mean()) > 0.01:
             rd = Random().randint(0, length)
